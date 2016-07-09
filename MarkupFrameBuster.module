@@ -1,0 +1,20 @@
+<?php namespace ProcessWire;
+
+class MarkupFrameBuster extends WireData implements Module {
+
+    public static function getModuleInfo() {
+        return [
+            'title'    => 'Markup FrameBuster',
+            'summary'  => 'Stopping content pirates with Frame Buster for ProcessWire.',
+            'version'  => 100,
+            'author'   => 'flydev',
+            'href'     => 'https://github.com/flydev-fr/MarkupFrameBuster',
+            'autoload' => false,
+            'singular' => false,
+        ];
+    }
+
+    public function render() {
+        return '<script type="text/javascript">function parentIsEvil() { var html = null; try { var doc = top.location.pathname; } catch(err){ }; if(typeof doc === "undefined") { return true } else { return false }; }; if (parentIsEvil()) { top.location = self.location.href; };var url = "'.wire('page')->url.'";if(url.indexOf("stfi.re") != -1) { var canonical = ""; var links = document.getElementsByTagName("link"); for (var i = 0; i < links.length; i ++) { if (links[i].getAttribute("rel") === "canonical") { canonical = links[i].getAttribute("href")}}; canonical = canonical.replace("?sfr=1", "");top.location = canonical; console.log(canonical);};</script>';
+    }
+}
